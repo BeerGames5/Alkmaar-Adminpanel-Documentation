@@ -1,3 +1,7 @@
+---
+description: "All configuration options for the Alkmaar Admin Panel in config.lua and config_server.lua."
+---
+
 # Configuration
 
 Everything you can change lives in two files. Both keep their comments, so the

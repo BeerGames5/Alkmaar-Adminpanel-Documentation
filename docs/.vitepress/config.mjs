@@ -1,22 +1,31 @@
 import { defineConfig } from 'vitepress';
 
-// Publishing to https://<user>.github.io/<repo>/ ? Then `base` must be '/<repo>/'.
+// Publishing to https://<user>.github.io/<repo>/ ? Then `base` must be '/<repo>/'
+// and it is case sensitive — it has to match the repository name exactly.
 // Using a custom domain (docs.yourdomain.com)? Set base to '/' and add a CNAME
 // file in docs/public/.
-const base = process.env.DOCS_BASE || '/arp-adminpanel-docs/';
+const base = process.env.DOCS_BASE || '/Alkmaar-Adminpanel-Documentation/';
+const hostname = process.env.DOCS_HOST || 'https://beergames5.github.io';
 
 export default defineConfig({
     title: 'Alkmaar Admin Panel',
-    description: 'Admin panel for ESX, QBCore and Qbox — installation, configuration and support.',
+    description: 'Documentation for the Alkmaar Admin Panel: a FiveM admin panel for ESX, QBCore and Qbox, with an in-game panel and a browser panel.',
     lang: 'en-US',
     base,
     cleanUrls: true,
     lastUpdated: true,
 
+    // Generates sitemap.xml so search engines can find every page.
+    sitemap: { hostname: hostname + base },
+
     head: [
         ['meta', { name: 'theme-color', content: '#3b82f6' }],
-        ['meta', { property: 'og:title', content: 'Alkmaar Admin Panel' }],
-        ['meta', { property: 'og:description', content: 'Documentation for the Alkmaar Admin Panel.' }],
+        ['meta', { name: 'keywords', content: 'fivem admin panel, esx admin panel, qbcore admin panel, qbox, fivem moderation, admin menu' }],
+        ['meta', { property: 'og:type', content: 'website' }],
+        ['meta', { property: 'og:site_name', content: 'Alkmaar Admin Panel' }],
+        ['meta', { property: 'og:title', content: 'Alkmaar Admin Panel — FiveM admin panel documentation' }],
+        ['meta', { property: 'og:description', content: 'Install, configure and troubleshoot the Alkmaar Admin Panel for ESX, QBCore and Qbox.' }],
+        ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ],
 
     themeConfig: {

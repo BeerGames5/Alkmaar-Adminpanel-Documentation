@@ -1,3 +1,7 @@
+---
+description: "How licensing works: licence formats, server binding, moving to another server, refunds and offline behaviour."
+---
+
 # Licence
 
 ## How it works

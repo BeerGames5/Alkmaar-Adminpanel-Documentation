@@ -1,3 +1,7 @@
+---
+description: "Connect the panel to your framework, inventory, housing script and other resources, plus available exports."
+---
+
 # Integrations
 
 The panel detects your framework and inventory automatically. These settings are

@@ -1,3 +1,7 @@
+---
+description: "Send staff logs to Discord webhooks and use Discord roles as staff groups in the Alkmaar Admin Panel."
+---
+
 # Discord logs
 
 Every staff action is always recorded on the panel's **Logs** page. Discord is

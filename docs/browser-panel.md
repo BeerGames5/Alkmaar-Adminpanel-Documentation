@@ -1,3 +1,7 @@
+---
+description: "Use the Alkmaar Admin Panel from any browser: get your private panel link and create logins for staff."
+---
+
 # Browser panel
 
 The same panel, reachable from any browser. Handy for dealing with a report

@@ -1,3 +1,7 @@
+---
+description: "Fix common problems: licence errors, the panel not opening, missing players, item images and Discord logs."
+---
+
 # Troubleshooting
 
 ::: tip Start here

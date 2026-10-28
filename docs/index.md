@@ -1,4 +1,5 @@
 ---
+description: "FiveM admin panel for ESX, QBCore and Qbox. Moderate in game or from any browser: players, bans, reports, logs and live world tools."
 layout: home
 
 hero:

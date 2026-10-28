@@ -1,3 +1,7 @@
+---
+description: "Every command in the Alkmaar Admin Panel for players, staff and owners, and how to rename or disable them."
+---
+
 # Commands
 
 All command names can be renamed in `Config.Commands` in `config.lua`. Set one

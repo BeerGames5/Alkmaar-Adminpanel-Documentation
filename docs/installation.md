@@ -1,3 +1,7 @@
+---
+description: "How to install the Alkmaar Admin Panel on your FiveM server: requirements, database import, licence setup and first use."
+---
+
 # Installation
 
 ## Requirements

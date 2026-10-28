@@ -1,3 +1,7 @@
+---
+description: "Configure staff groups and permissions using ESX, QBCore, ace permissions, Discord roles or your own staff script."
+---
+
 # Staff & permissions
 
 Two things decide what someone may do: **where their group comes from**, and

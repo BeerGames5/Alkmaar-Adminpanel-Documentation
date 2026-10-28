@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://beergames5.github.io/Alkmaar-Adminpanel-Documentation/sitemap.xml
