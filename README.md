@@ -1,1 +1,0 @@
-# Alkmaar-Adminpanel-Documentation
