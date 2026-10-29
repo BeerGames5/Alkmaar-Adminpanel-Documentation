@@ -17,16 +17,40 @@ These two files are yours. When you update the panel, keep your copies and
 replace everything else.
 :::
 
+## Set these first
+
+The panel ships with neutral defaults, so there are only a few things you have
+to fill in before it is yours.
+
+```lua
+Config.Web.Cloud.License = ''          -- your licence key, or set it in server.cfg
+Config.UI.Brand          = 'My Server' -- your server name in the sidebar
+Config.Locale            = 'en'        -- 'en' | 'nl' | 'de' | 'fr' | 'es'
+```
+
+Everything else already works. Run `panellink` in the server console afterwards
+for a setup check.
+
+::: tip Keep your licence out of config.lua
+`set arp_panel_license "ARP-XXXXX-XXXXX-XXXXX-XXXXX"` in `server.cfg` keeps the
+key out of the files you share with developers. See [Licence](/licence).
+:::
+
 ## The basics
 
 ```lua
-Config.Locale = 'en'        -- en, nl, de, fr, es
-Config.Framework = 'auto'   -- auto, esx, qb, qbox, none
-Config.Inventory = 'auto'   -- auto, ox, qb, qs, custom
-Config.Debug = false
+Config.Locale    = 'en'     -- 'en' | 'nl' | 'de' | 'fr' | 'es'
+Config.Framework = 'auto'   -- 'auto' | 'esx' | 'qbcore' | 'qbox'
+Config.Inventory = 'auto'   -- 'auto' | 'ox_inventory' | 'qb-inventory' | 'qs-inventory' | 'framework' | 'custom'
+Config.Debug     = false
 ```
 
 `'auto'` detects what you run. Set it explicitly only if detection is wrong.
+
+::: tip Something not working?
+Set `Config.Debug = true` and restart. The console then says which framework,
+inventory and staff source were detected, and why a lookup failed.
+:::
 
 ## Sections in config.lua
 
@@ -75,10 +99,15 @@ Players can never read this file, so Discord tokens and webhooks are safe there.
 
 ```lua
 Config.UI = {
-    Brand = 'YOUR SERVER',
-    BrandSub = 'Admin Panel',
+    Brand    = 'My Server',     -- name in the sidebar and on the login screen
+    BrandSub = 'Admin Panel',   -- the smaller line under it
+    Logo     = 'logo.png',      -- a file in html/, or an https:// link
+    Accent   = '#2f7fe0',       -- highlight colour
 }
 ```
+
+Replace `html/logo.png` with your own image. An animated `.gif` works too: drop
+it in `html/` and set `Logo = 'logo.gif'`.
 
 Staff can pick their own theme, accent colour, density and layout from the
 panel's **Settings** page — those are personal preferences, not server config.
