@@ -11,13 +11,24 @@ yourself.
 ## Framework and inventory
 
 ```lua
-Config.Framework = 'auto'   -- 'auto' | 'esx' | 'qbcore' | 'qbox'
+Config.Framework = 'auto'   -- 'auto' | 'esx' | 'qbcore' | 'qbox' | 'none'
 Config.Inventory = 'auto'   -- 'auto' | 'ox_inventory' | 'qb-inventory' | 'qs-inventory' | 'framework' | 'custom'
 Config.Job2      = 'none'   -- 'none' | 'esx_job2' | 'qb_gang'
 ```
 
 `'auto'` detects `es_extended`, `qbx_core` or `qb-core`. Set it explicitly only
 when you run a renamed or forked core that detection does not recognise.
+
+`'none'` is what detection falls back to when it finds no framework. The panel
+still runs: players are found through FiveM itself, so moderation, bans, logs,
+tickets and the map all work. Jobs, money and inventory are empty, because there
+is nothing to read them from.
+
+::: warning
+On a framework server this almost always means detection failed rather than that
+you meant it. The panel prints a red line on start when it lands on `'none'`, so
+check your console if jobs and money are suddenly missing.
+:::
 
 `Config.Job2` adds a second job column to the player file. With `'esx_job2'` you
 also need the `Job2` and `Job2Grade` columns set in `Config.Database.Users`.
@@ -90,10 +101,26 @@ shape, so once you understand one you understand all of them.
 | `'builtin'` | The panel handles it itself |
 | `'none'` | Turn it off — the button disappears where there is one |
 | `'export'` | `exports[resource][name](args...)` |
-| `'event'` | `TriggerEvent(name, args...)` on the same side |
-| `'server_event'` | `TriggerServerEvent(name, args...)` |
-| `'client_event'` | `TriggerClientEvent(name, target, args...)` |
-| `'function'` | A Lua function in `config_server.lua` |
+| `'event'` | `TriggerEvent(name, args...)`, on the side it already runs |
+| `'function'` | `fn = function(ctx) ... end`, written in the config |
+
+Two more depend on **which side the integration runs on**, because they are the
+only way to reach the other side:
+
+| Runs on | Extra type |
+|---|---|
+| a client integration | `'server_event'` → `TriggerServerEvent(name, args...)` |
+| a server integration | `'client_event'` → `TriggerClientEvent(name, target, args...)` |
+
+::: warning Pick the one that matches the side
+A client integration cannot take `client_event`, and a server one cannot take
+`server_event`. It does not crash: the console prints *"Integration type … is not
+supported here"* and the panel falls back to its own behaviour, which is easy to
+miss. The table below says which side each one runs on.
+
+On a client integration, `'event'` already fires a client event — that is what
+most notification and menu scripts want.
+:::
 
 Each integration has its own values, and you place them yourself with `{braces}`:
 
@@ -118,8 +145,8 @@ how options-object APIs like `ox_lib` are called.
 | `Clothing` | player's client | — |
 | `Needs` | server | — |
 | `Weather` | server | `weather` `freeze` |
-| `VehicleKeys` | staff client | `plate` `vehicle` `model` |
-| `GiveKeys` | player's client | `plate` `vehicle` `model` |
+| `VehicleKeys` | staff client | `plate` `vehicle` `model` `netId` |
+| `GiveKeys` | player's client | `plate` `vehicle` `model` `netId` |
 | `Jail` | server | `target` `minutes` `reason` `admin` |
 | `Unjail` | server | `target` `admin` |
 | `Cuff` | player's client | `cuffed` |
@@ -135,11 +162,11 @@ Notify = {
     args = { { description = '{message}', type = '{type}', duration = '{duration}' } },
 },
 
--- ESX
-Notify = { type = 'client_event', name = 'esx:showNotification', args = { '{message}' } },
+-- ESX  (Notify runs on the client, so 'event' is already a client event)
+Notify = { type = 'event', name = 'esx:showNotification', args = { '{message}' } },
 
 -- QBCore
-Notify = { type = 'client_event', name = 'QBCore:Notify', args = { '{message}', '{type}', '{duration}' } },
+Notify = { type = 'event', name = 'QBCore:Notify', args = { '{message}', '{type}', '{duration}' } },
 
 -- your own script
 Notify = {
@@ -156,7 +183,8 @@ Revive = { type = 'client_event', name = 'hospital:client:Revive' },       -- QB
 Heal   = { type = 'client_event', name = 'esx_basicneeds:healPlayer' },    -- ESX
 ```
 
-`'builtin'` already restores health, armour, hunger and thirst. Only replace it
+Revive and Heal run on the server, which is why `client_event` is the right type
+here. `'builtin'` already restores health, armour, hunger and thirst. Only replace it
 when your medical script needs to know as well, for example to clear a death
 state of its own.
 
@@ -189,7 +217,8 @@ Jail = {
 },
 ```
 
-Leave `type = 'none'` and the jail button is hidden instead of failing.
+Leave `type = 'none'` and the jail button is hidden instead of failing. Jail and
+Unjail take `client_event` but not `'builtin'` — the panel has no jail of its own.
 
 ### Clothing
 
@@ -225,6 +254,9 @@ The last argument is `'low'`, `'medium'` or `'high'`.
 ```lua
 Weather = { type = 'event', name = 'my-weather:set', args = { '{weather}', '{freeze}' } },
 ```
+
+Weather is the one integration that takes no `client_event`. Fire your own server
+event and let your weather script tell its own clients.
 
 ::: warning
 Leave this on `'none'` when a weather sync script already owns the weather, or

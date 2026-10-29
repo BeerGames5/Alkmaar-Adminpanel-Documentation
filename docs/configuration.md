@@ -40,7 +40,7 @@ key out of the files you share with developers. See [Licence](/licence).
 
 ```lua
 Config.Locale    = 'en'     -- 'en' | 'nl' | 'de' | 'fr' | 'es'
-Config.Framework = 'auto'   -- 'auto' | 'esx' | 'qbcore' | 'qbox'
+Config.Framework = 'auto'   -- 'auto' | 'esx' | 'qbcore' | 'qbox' | 'none'
 Config.Inventory = 'auto'   -- 'auto' | 'ox_inventory' | 'qb-inventory' | 'qs-inventory' | 'framework' | 'custom'
 Config.Debug     = false
 ```
