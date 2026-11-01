@@ -4,8 +4,8 @@ import { defineConfig } from 'vitepress';
 // and it is case sensitive — it has to match the repository name exactly.
 // Using a custom domain (docs.yourdomain.com)? Set base to '/' and add a CNAME
 // file in docs/public/.
-const base = process.env.DOCS_BASE || '/Alkmaar-Adminpanel-Documentation/';
-const hostname = process.env.DOCS_HOST || 'https://beergames5.github.io';
+const base = process.env.DOCS_BASE || '/';
+const hostname = process.env.DOCS_HOST || 'https://docs.alkmaarcreator.com';
 
 export default defineConfig({
     title: 'Alkmaar Admin Panel',
